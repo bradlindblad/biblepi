@@ -1,5 +1,3 @@
-
-
 # import vlc
 import time
 import os
@@ -21,7 +19,7 @@ for (dirpath, dirnames, filenames) in walk("."):
     books.extend(dirnames)
     break
 
-books = sorted(books, key = lambda x: x[:2]) 
+books = sorted(books, key=lambda x: x[:2])
 # books = books[0]
 # Test getting all files in a dir
 # poo = getAllFiles("01_Genesis")
@@ -35,14 +33,12 @@ books = sorted(books, key = lambda x: x[:2])
 #     full_playlist.append(foo)
 
 
-
 for book in books:
-    
 
     # os.chdir(book)
-        # Get all mp3 file names
+    # Get all mp3 file names
     foo = [f for f in listdir(book) if isfile(join(book, f))]
-    foo = sorted(foo, key = lambda x: x[:-3]) 
+    foo = sorted(foo, key=lambda x: x[:-3])
 
     os.chdir(book)
     playlist = AudioSegment.empty()
@@ -50,8 +46,8 @@ for book in books:
         i = AudioSegment.from_mp3(i)
         playlist += i
     filenamee = "/home/xps/Desktop/" + str(book)
-    playlist.export(filenamee, format = "mp3")
+    playlist.export(filenamee, format="mp3")
     print(book)
-    os.chdir('..')
+    os.chdir("..")
 
 # os.listdir()

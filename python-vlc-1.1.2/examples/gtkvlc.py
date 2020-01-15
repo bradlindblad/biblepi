@@ -34,6 +34,7 @@ $Id$
 """
 
 import gtk
+
 gtk.gdk.threads_init()
 
 import sys
@@ -44,23 +45,28 @@ from gettext import gettext as _
 # Create a single vlc.Instance() to be shared by (possible) multiple players.
 instance = vlc.Instance()
 
+
 class VLCWidget(gtk.DrawingArea):
     """Simple VLC widget.
 
     Its player can be controlled through the 'player' attribute, which
     is a vlc.MediaPlayer() instance.
     """
+
     def __init__(self, *p):
         gtk.DrawingArea.__init__(self)
         self.player = instance.media_player_new()
+
         def handle_embed(*args):
-            if sys.platform == 'win32':
+            if sys.platform == "win32":
                 self.player.set_hwnd(self.window.handle)
             else:
                 self.player.set_xwindow(self.window.xid)
             return True
+
         self.connect("map", handle_embed)
         self.set_size_request(320, 200)
+
 
 class DecoratedVLCWidget(gtk.VBox):
     """Decorated VLC widget.
@@ -70,6 +76,7 @@ class DecoratedVLCWidget(gtk.VBox):
     Its player can be controlled through the 'player' attribute, which
     is a Player instance.
     """
+
     def __init__(self, *p):
         gtk.VBox.__init__(self)
         self._vlc_widget = VLCWidget(*p)
@@ -85,19 +92,26 @@ class DecoratedVLCWidget(gtk.VBox):
         tb.set_style(gtk.TOOLBAR_ICONS)
         for text, tooltip, stock, callback in (
             (_("Play"), _("Play"), gtk.STOCK_MEDIA_PLAY, lambda b: self.player.play()),
-            (_("Pause"), _("Pause"), gtk.STOCK_MEDIA_PAUSE, lambda b: self.player.pause()),
+            (
+                _("Pause"),
+                _("Pause"),
+                gtk.STOCK_MEDIA_PAUSE,
+                lambda b: self.player.pause(),
+            ),
             (_("Stop"), _("Stop"), gtk.STOCK_MEDIA_STOP, lambda b: self.player.stop()),
-            ):
-            b=gtk.ToolButton(stock)
+        ):
+            b = gtk.ToolButton(stock)
             b.set_tooltip_text(tooltip)
             b.connect("clicked", callback)
             tb.insert(b, -1)
         tb.show_all()
         return tb
 
+
 class VideoPlayer:
     """Example simple video player.
     """
+
     def __init__(self):
         self.vlc = DecoratedVLCWidget()
 
@@ -109,16 +123,18 @@ class VideoPlayer:
         w.connect("destroy", gtk.main_quit)
         gtk.main()
 
+
 class MultiVideoPlayer:
     """Example multi-video player.
 
     It plays multiple files side-by-side, with per-view and global controls.
     """
+
     def main(self, filenames):
         # Build main window
-        window=gtk.Window()
-        mainbox=gtk.VBox()
-        videos=gtk.HBox()
+        window = gtk.Window()
+        mainbox = gtk.VBox()
+        videos = gtk.HBox()
 
         window.add(mainbox)
         mainbox.add(videos)
@@ -144,7 +160,7 @@ class MultiVideoPlayer:
             (_("Play"), _("Global play"), gtk.STOCK_MEDIA_PLAY, execute, "play"),
             (_("Pause"), _("Global pause"), gtk.STOCK_MEDIA_PAUSE, execute, "pause"),
             (_("Stop"), _("Global stop"), gtk.STOCK_MEDIA_STOP, execute, "stop"),
-            ):
+        ):
             b = gtk.ToolButton(stock)
             b.set_tooltip_text(tooltip)
             b.connect("clicked", callback, arg)
@@ -156,15 +172,16 @@ class MultiVideoPlayer:
         window.connect("destroy", gtk.main_quit)
         gtk.main()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     if not sys.argv[1:]:
-       print('You must provide at least 1 movie filename')
-       sys.exit(1)
+        print("You must provide at least 1 movie filename")
+        sys.exit(1)
     if len(sys.argv[1:]) == 1:
         # Only 1 file. Simple interface
-        p=VideoPlayer()
+        p = VideoPlayer()
         p.main(sys.argv[1])
     else:
         # Multiple files.
-        p=MultiVideoPlayer()
+        p = MultiVideoPlayer()
         p.main(sys.argv[1:])

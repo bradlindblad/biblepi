@@ -24,9 +24,11 @@ import os.path
 import vlc
 from PyQt4 import QtGui, QtCore
 
+
 class Player(QtGui.QMainWindow):
     """A simple Media Player using VLC and Qt
     """
+
     def __init__(self, master=None):
         QtGui.QMainWindow.__init__(self, master)
         self.setWindowTitle("Media Player")
@@ -46,32 +48,30 @@ class Player(QtGui.QMainWindow):
         self.setCentralWidget(self.widget)
 
         # In this widget, the video will be drawn
-        if sys.platform == "darwin": # for MacOS
+        if sys.platform == "darwin":  # for MacOS
             self.videoframe = QtGui.QMacCocoaViewContainer(0)
         else:
             self.videoframe = QtGui.QFrame()
         self.palette = self.videoframe.palette()
-        self.palette.setColor (QtGui.QPalette.Window,
-                               QtGui.QColor(0,0,0))
+        self.palette.setColor(QtGui.QPalette.Window, QtGui.QColor(0, 0, 0))
         self.videoframe.setPalette(self.palette)
         self.videoframe.setAutoFillBackground(True)
 
         self.positionslider = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         self.positionslider.setToolTip("Position")
         self.positionslider.setMaximum(1000)
-        self.connect(self.positionslider,
-                     QtCore.SIGNAL("sliderMoved(int)"), self.setPosition)
+        self.connect(
+            self.positionslider, QtCore.SIGNAL("sliderMoved(int)"), self.setPosition
+        )
 
         self.hbuttonbox = QtGui.QHBoxLayout()
         self.playbutton = QtGui.QPushButton("Play")
         self.hbuttonbox.addWidget(self.playbutton)
-        self.connect(self.playbutton, QtCore.SIGNAL("clicked()"),
-                     self.PlayPause)
+        self.connect(self.playbutton, QtCore.SIGNAL("clicked()"), self.PlayPause)
 
         self.stopbutton = QtGui.QPushButton("Stop")
         self.hbuttonbox.addWidget(self.stopbutton)
-        self.connect(self.stopbutton, QtCore.SIGNAL("clicked()"),
-                     self.Stop)
+        self.connect(self.stopbutton, QtCore.SIGNAL("clicked()"), self.Stop)
 
         self.hbuttonbox.addStretch(1)
         self.volumeslider = QtGui.QSlider(QtCore.Qt.Horizontal, self)
@@ -79,9 +79,9 @@ class Player(QtGui.QMainWindow):
         self.volumeslider.setValue(self.mediaplayer.audio_get_volume())
         self.volumeslider.setToolTip("Volume")
         self.hbuttonbox.addWidget(self.volumeslider)
-        self.connect(self.volumeslider,
-                     QtCore.SIGNAL("valueChanged(int)"),
-                     self.setVolume)
+        self.connect(
+            self.volumeslider, QtCore.SIGNAL("valueChanged(int)"), self.setVolume
+        )
 
         self.vboxlayout = QtGui.QVBoxLayout()
         self.vboxlayout.addWidget(self.videoframe)
@@ -102,8 +102,7 @@ class Player(QtGui.QMainWindow):
 
         self.timer = QtCore.QTimer(self)
         self.timer.setInterval(200)
-        self.connect(self.timer, QtCore.SIGNAL("timeout()"),
-                     self.updateUI)
+        self.connect(self.timer, QtCore.SIGNAL("timeout()"), self.updateUI)
 
     def PlayPause(self):
         """Toggle play/pause status
@@ -131,12 +130,14 @@ class Player(QtGui.QMainWindow):
         """Open a media file in a MediaPlayer
         """
         if filename is None:
-            filename = QtGui.QFileDialog.getOpenFileName(self, "Open File", os.path.expanduser('~'))
+            filename = QtGui.QFileDialog.getOpenFileName(
+                self, "Open File", os.path.expanduser("~")
+            )
         if not filename:
             return
 
         # create the media
-        if sys.version < '3':
+        if sys.version < "3":
             filename = unicode(filename)
         self.media = self.instance.media_new(filename)
         # put the media in the media player
@@ -152,11 +153,11 @@ class Player(QtGui.QMainWindow):
         # this is platform specific!
         # you have to give the id of the QFrame (or similar object) to
         # vlc, different platforms have different functions for this
-        if sys.platform.startswith('linux'): # for Linux using the X Server
+        if sys.platform.startswith("linux"):  # for Linux using the X Server
             self.mediaplayer.set_xwindow(self.videoframe.winId())
-        elif sys.platform == "win32": # for Windows
+        elif sys.platform == "win32":  # for Windows
             self.mediaplayer.set_hwnd(self.videoframe.winId())
-        elif sys.platform == "darwin": # for MacOS
+        elif sys.platform == "darwin":  # for MacOS
             self.mediaplayer.set_nsobject(self.videoframe.winId())
         self.PlayPause()
 
@@ -188,6 +189,7 @@ class Player(QtGui.QMainWindow):
                 # "Pause", not the desired behavior of a media player
                 # this will fix it
                 self.Stop()
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

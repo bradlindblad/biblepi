@@ -27,19 +27,22 @@ Date: 23-11-2010
 """
 
 # import external libraries
-import wx # 2.8
+import wx  # 2.8
 import vlc
 
 # import standard libraries
 import os
 import user
 
+
 class Player(wx.Frame):
     """The main window has to deal with events.
     """
+
     def __init__(self, title):
-        wx.Frame.__init__(self, None, -1, title,
-                          pos=wx.DefaultPosition, size=(550, 500))
+        wx.Frame.__init__(
+            self, None, -1, title, pos=wx.DefaultPosition, size=(550, 500)
+        )
 
         # Menu Bar
         #   File Menu
@@ -59,12 +62,12 @@ class Player(wx.Frame):
         self.videopanel.SetBackgroundColour(wx.BLACK)
 
         # The second panel holds controls
-        ctrlpanel = wx.Panel(self, -1 )
+        ctrlpanel = wx.Panel(self, -1)
         self.timeslider = wx.Slider(ctrlpanel, -1, 0, 0, 1000)
         self.timeslider.SetRange(0, 1000)
-        pause  = wx.Button(ctrlpanel, label="Pause")
-        play   = wx.Button(ctrlpanel, label="Play")
-        stop   = wx.Button(ctrlpanel, label="Stop")
+        pause = wx.Button(ctrlpanel, label="Pause")
+        play = wx.Button(ctrlpanel, label="Play")
+        stop = wx.Button(ctrlpanel, label="Stop")
         volume = wx.Button(ctrlpanel, label="Volume")
         self.volslider = wx.Slider(ctrlpanel, -1, 0, 0, 100, size=(100, -1))
 
@@ -120,13 +123,14 @@ class Player(wx.Frame):
 
         # Create a file dialog opened in the current home directory, where
         # you can display all kind of files, having as title "Choose a file".
-        dlg = wx.FileDialog(self, "Choose a file", user.home, "",
-                            "*.*", wx.OPEN)
+        dlg = wx.FileDialog(self, "Choose a file", user.home, "", "*.*", wx.OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             dirname = dlg.GetDirectory()
             filename = dlg.GetFilename()
             # Creation
-            self.Media = self.Instance.media_new(unicode(os.path.join(dirname, filename)))
+            self.Media = self.Instance.media_new(
+                unicode(os.path.join(dirname, filename))
+            )
             self.player.set_media(self.Media)
             # Report the title of the file chosen
             title = self.player.get_title()
@@ -210,9 +214,9 @@ class Player(wx.Frame):
     def errorDialog(self, errormessage):
         """Display a simple error dialog.
         """
-        edialog = wx.MessageDialog(self, errormessage, 'Error', wx.OK|
-                                                                wx.ICON_ERROR)
+        edialog = wx.MessageDialog(self, errormessage, "Error", wx.OK | wx.ICON_ERROR)
         edialog.ShowModal()
+
 
 if __name__ == "__main__":
     # Create a wx.App(), which handles the windowing system event loop

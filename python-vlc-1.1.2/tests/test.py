@@ -27,22 +27,24 @@
 """
 
 import unittest
+
 try:
-    import urllib.parse as urllib # python3
+    import urllib.parse as urllib  # python3
 except:
-    import urllib # python2
+    import urllib  # python2
 
 try:
     import vlc
 except:
     import generated.vlc as vlc
 
-print ("Checking " + vlc.__file__)
+print("Checking " + vlc.__file__)
+
 
 class TestVLCAPI(unittest.TestCase):
-    #def setUp(self):
+    # def setUp(self):
     #    self.seq = range(10)
-    #self.assert_(element in self.seq)
+    # self.assert_(element in self.seq)
 
     # We check enum definitions against hardcoded values. In case of
     # failure, check that the reason is not a change in the .h
@@ -70,51 +72,52 @@ class TestVLCAPI(unittest.TestCase):
 
     # Basic libvlc tests
     def test_instance_creation(self):
-        i=vlc.Instance()
+        i = vlc.Instance()
         self.assertTrue(i)
 
     def test_libvlc_media(self):
-        mrl='/tmp/foo.avi'
-        i=vlc.Instance()
-        m=i.media_new(mrl)
-        self.assertEqual(m.get_mrl(), 'file://' + mrl)
+        mrl = "/tmp/foo.avi"
+        i = vlc.Instance()
+        m = i.media_new(mrl)
+        self.assertEqual(m.get_mrl(), "file://" + mrl)
 
     def test_wrapper_media(self):
-        mrl = '/tmp/foo.avi'
+        mrl = "/tmp/foo.avi"
         m = vlc.Media(mrl)
-        self.assertEqual(m.get_mrl(), 'file://' + mrl)
+        self.assertEqual(m.get_mrl(), "file://" + mrl)
 
     def test_wrapper_medialist(self):
-        mrl1 = '/tmp/foo.avi'
-        mrl2 = '/tmp/bar.avi'
-        l = vlc.MediaList( [mrl1, mrl2] )
-        self.assertEqual(l[1].get_mrl(), 'file://' + mrl2)
+        mrl1 = "/tmp/foo.avi"
+        mrl2 = "/tmp/bar.avi"
+        l = vlc.MediaList([mrl1, mrl2])
+        self.assertEqual(l[1].get_mrl(), "file://" + mrl2)
 
     def test_libvlc_player(self):
-        mrl='/tmp/foo.avi'
-        i=vlc.Instance()
-        p=i.media_player_new(mrl)
-        self.assertEqual(p.get_media().get_mrl(), 'file://' + mrl)
+        mrl = "/tmp/foo.avi"
+        i = vlc.Instance()
+        p = i.media_player_new(mrl)
+        self.assertEqual(p.get_media().get_mrl(), "file://" + mrl)
 
     def test_libvlc_none_object(self):
-        i=vlc.Instance()
-        p=i.media_player_new()
+        i = vlc.Instance()
+        p = i.media_player_new()
         p.set_media(None)
         self.assertEqual(p.get_media(), None)
 
     def test_libvlc_player_state(self):
-        mrl='/tmp/foo.avi'
-        i=vlc.Instance()
-        p=i.media_player_new(mrl)
+        mrl = "/tmp/foo.avi"
+        i = vlc.Instance()
+        p = i.media_player_new(mrl)
         self.assertEqual(p.get_state(), vlc.State.NothingSpecial)
 
     # Test that the VLC bindings can handle special characters in the filenames
     def test_libvlc_player_special_chars(self):
-        mrl = u'/tmp/Test 韓 Korean.mp4'
+        mrl = u"/tmp/Test 韓 Korean.mp4"
         i = vlc.Instance()
         m = i.media_new(mrl)
-        url_encoded_mrl = urllib.quote(mrl.encode('utf-8'))
-        self.assertEqual(m.get_mrl(), 'file://' + url_encoded_mrl)
+        url_encoded_mrl = urllib.quote(mrl.encode("utf-8"))
+        self.assertEqual(m.get_mrl(), "file://" + url_encoded_mrl)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
