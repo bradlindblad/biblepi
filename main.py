@@ -6,7 +6,7 @@ import easygui
 from os import listdir
 from os.path import isfile, join
 import glob
-
+import random
 
 def main():
 
@@ -17,10 +17,8 @@ def main():
             msg="Play on timer or free play?",
             choices=["Timer", "Freeplay"],
         )
-        media = easygui.choicebox(
-            title="BiblePi",
-            msg="Pick a book",
-            choices=[
+
+        choices = [
                 "Matt",
                 "Mark",
                 "Luke",
@@ -49,7 +47,41 @@ def main():
                 "Jude",
                 "Rev",
             ]
-        )
+        # media = easygui.choicebox(
+        #     title="BiblePi",
+        #     msg="Pick a book",
+        #     choices=[
+        #         "Matt",
+        #         "Mark",
+        #         "Luke",
+        #         "John",
+        #         "Acts",
+        #         "Rom",
+        #         "1Cor",
+        #         "2Cor",
+        #         "Galat",
+        #         "Eph",
+        #         "Phil",
+        #         "Colos",
+        #         "1Thes",
+        #         "2Thes",
+        #         "1Tim",
+        #         "2Tim",
+        #         "Titus",
+        #         "Philp",
+        #         "Heb",
+        #         "James",
+        #         "1Pete",
+        #         "2Pete",
+        #         "1John",
+        #         "2John",
+        #         "3John",
+        #         "Jude",
+        #         "Rev",
+        #     ]
+        # )
+
+        media = random.choice(choices)
         instance = vlc.MediaPlayer("bible/" + media)
 
         while True:
@@ -83,7 +115,7 @@ def main():
                 instance.stop()
                 break
             if timerYN == "Timer":
-                time.sleep(playlen)
+                time.sleep(playlen * 60)
                 instance.stop()
                 timerYN = "Freeplay"
                 break
