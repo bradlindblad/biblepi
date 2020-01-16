@@ -17,7 +17,7 @@ def main():
             msg="Play on timer or free play?",
             choices=["Timer", "Freeplay"],
         )
-        media = easygui.buttonbox(
+        media = easygui.choicebox(
             title="BiblePi",
             msg="Pick a book",
             choices=[
@@ -48,7 +48,7 @@ def main():
                 "3John",
                 "Jude",
                 "Rev",
-            ],
+            ]
         )
         instance = vlc.MediaPlayer("bible/" + media)
 
