@@ -1,2 +1,2 @@
 easygui==0.98.1
-playsound
+playsound==1.2.2
