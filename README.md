@@ -12,7 +12,7 @@
 
 
 ## What is it
-A simple python program to read a random book from the New Testament to you and your family. The program is based on the [easygui](https://github.com/robertlugg/easygui) package by Robert Lugg and the popular VLC package. You have the option of setting a timer to read for a given interval (great to put you or your kids to sleep), or to freeplay until you pause or stop the player. 
+A simple python program to read a random book from the New Testament (KJV) to you and your family. The program is based on the [easygui](https://github.com/robertlugg/easygui) package by Robert Lugg and the popular VLC package. You have the option of setting a timer to read for a given interval (great to put you or your kids to sleep), or to freeplay until you pause or stop the player. 
 
 ## Installation
 ```
@@ -42,3 +42,6 @@ If you're on Windows, run
 ```
 python main.py
 ```
+
+## Source
+All audio files downloaded from [audiotreasure.com](https://audiotreasure.com/AT_KJVA.htm)
