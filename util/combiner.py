@@ -1,5 +1,3 @@
-# import vlc
-import time
 import os
 from os import walk
 import easygui
@@ -11,7 +9,7 @@ from os import listdir
 from os import walk
 from pydub import AudioSegment
 
-os.listdir()
+
 # Put all books of Bible in order
 os.chdir("bible")
 books = []
@@ -20,17 +18,6 @@ for (dirpath, dirnames, filenames) in walk("."):
     break
 
 books = sorted(books, key=lambda x: x[:2])
-# books = books[0]
-# Test getting all files in a dir
-# poo = getAllFiles("01_Genesis")
-# for i in poo:
-#     print(i)
-
-# Tie it all together
-# full_playlist = []
-# for book in books:
-#     foo = getAllFiles(book)
-#     full_playlist.append(foo)
 
 
 for book in books:
@@ -49,5 +36,3 @@ for book in books:
     playlist.export(filenamee, format="mp3")
     print(book)
     os.chdir("..")
-
-# os.listdir()

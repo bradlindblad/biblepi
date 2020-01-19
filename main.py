@@ -1,12 +1,7 @@
 import vlc
-import time
-import os
-from os import walk
 import easygui
-from os import listdir
-from os.path import isfile, join
-import glob
 import random
+
 
 def main():
 
@@ -19,67 +14,35 @@ def main():
         )
 
         choices = [
-                "Matt",
-                "Mark",
-                "Luke",
-                "John",
-                "Acts",
-                "Rom",
-                "1Cor",
-                "2Cor",
-                "Galat",
-                "Eph",
-                "Phil",
-                "Colos",
-                "1Thes",
-                "2Thes",
-                "1Tim",
-                "2Tim",
-                "Titus",
-                "Philp",
-                "Heb",
-                "James",
-                "1Pete",
-                "2Pete",
-                "1John",
-                "2John",
-                "3John",
-                "Jude",
-                "Rev",
-            ]
-        # media = easygui.choicebox(
-        #     title="BiblePi",
-        #     msg="Pick a book",
-        #     choices=[
-        #         "Matt",
-        #         "Mark",
-        #         "Luke",
-        #         "John",
-        #         "Acts",
-        #         "Rom",
-        #         "1Cor",
-        #         "2Cor",
-        #         "Galat",
-        #         "Eph",
-        #         "Phil",
-        #         "Colos",
-        #         "1Thes",
-        #         "2Thes",
-        #         "1Tim",
-        #         "2Tim",
-        #         "Titus",
-        #         "Philp",
-        #         "Heb",
-        #         "James",
-        #         "1Pete",
-        #         "2Pete",
-        #         "1John",
-        #         "2John",
-        #         "3John",
-        #         "Jude",
-        #         "Rev",
-        #     ]
-        # )
+            "Matt",
+            "Mark",
+            "Luke",
+            "John",
+            "Acts",
+            "Rom",
+            "1Cor",
+            "2Cor",
+            "Galat",
+            "Eph",
+            "Phil",
+            "Colos",
+            "1Thes",
+            "2Thes",
+            "1Tim",
+            "2Tim",
+            "Titus",
+            "Philp",
+            "Heb",
+            "James",
+            "1Pete",
+            "2Pete",
+            "1John",
+            "2John",
+            "3John",
+            "Jude",
+            "Rev",
+        ]
+
 
         media = random.choice(choices)
         instance = vlc.MediaPlayer("bible/" + media)
@@ -106,11 +69,6 @@ def main():
                 instance.pause()
             elif choice == "Stop":
                 instance.stop()
-            # elif choice == "Pick Book":
-            #     media = easygui.buttonbox(title= "BiblePi", msg = "Pick a book", choices = [ "Matthew","Mark", "Luke", "John", "Acts",
-            #     "Romans", "1Corin", "2Corin", "Galatians", "Ephesians", "Phil", "Coloss", "1Thess",
-            #     "2Thess", "1Tim", "2Tim", "Titus", "Philemon", "Hebrews", "James", "1Peter", "2Peter",
-            #     "1John", "2John", "3John" "Jude", "Revelation"])
             elif choice == "Start Over":
                 instance.stop()
                 break
