@@ -65,6 +65,7 @@ def main():
                 playlen = int(playlen)
 
             if choice == "Play":
+                time.sleep(2)
                 instance.play()
             elif choice == "Pause":
                 instance.pause()
